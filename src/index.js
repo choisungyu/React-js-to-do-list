@@ -57,14 +57,16 @@ class TodoListItem extends React.Component {
 // 아래 코드는 function이 Class를 감쌀 수 없습니다.
 const TodoApp = props => (
   <ul>
-    {/* 밑에서 만든 prop 인 todo3을 하나씩 끄냄 */}
+    {/* props.todo3 === prop2 */}
     {props.todos3.map(todo => (
-      //  하나씩 끄낸 todo 를 todo3에 메핑 해줌
       <TodoListItem todos3={todo} />
     ))}
   </ul>
 );
-
 const todos2 = ["Learn React", "Crush Recast.ly", "Maybe sleep"];
-// todo2 에서 배열을 todo3에 담음 ( todo3이라는 prop을 만듦 )
 ReactDOM.render(<TodoApp todos3={todos2} />, document.getElementById("root"));
+
+/*
+ReactDom.render -> todo2변수들을 TodoApp 으로 todo3 이라는 prop 으로 보냄 
+결국에는 todo2 를 TodoApp 에서 -> TodoListItem 으로 prop 을 내려주는 셈 
+ */
