@@ -1,3 +1,4 @@
+// jsx 사용위해서는 import해줘야 함
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -64,6 +65,7 @@ class GroceryItem extends React.Component {
         onClick={this.onListItemClick.bind(this)}
       >
         {this.props.groceries}
+        {this.props.todos}
       </li>
     );
   }
@@ -74,11 +76,15 @@ const GroceryApp = props => (
     {props.groceries.map(grocery => (
       <GroceryItem key={grocery.toString()} groceries={grocery} />
     ))}
+    {props.todoList.map(todo => (
+      <GroceryItem key={todo.toString()} todos={todo} />
+    ))}
   </ul>
 );
 
 const groceries = ["cucumber", "kale"];
+const lists = ["Learn react", "Crush Recast.ly", "Maybe sleep"];
 ReactDOM.render(
-  <GroceryApp groceries={groceries} />,
+  <GroceryApp groceries={groceries} todoList={lists} />,
   document.getElementById("root")
 );
