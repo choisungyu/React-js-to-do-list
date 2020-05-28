@@ -12,11 +12,13 @@ class Counter extends React.Component {
       number: 0
     };
   }
-  handleIncrease() {
+  // 이렇게 수정할 수 있음
+  handleIncrease = () => {
+    const { number } = this.state;
     this.setState({
-      number: this.state.number + 1
+      number: number + 1
     });
-  }
+  };
 
   handleDecrease() {
     this.setState({
@@ -40,11 +42,15 @@ class Counter extends React.Component {
 class TodoListItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      number: 0
+    };
   }
 
   render() {
     return <div>제 todoList 목록들은 {this.props.todos} 입니다.</div>;
+    // alert 로 목록들 누르면 number 번 눌렀습니다 뜨게 하기
   }
 }
 
