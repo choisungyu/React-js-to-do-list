@@ -2,33 +2,51 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-// const TodoList = (props) => {
-//   const onListItemClick = (event) => {
-//     console.log('I got clicked');
-//     alert('hi');
-//   };
-//
-//   return (
-//     <ul>
-//       <li onClick={onListItemClick}>{props.todos[0]}</li>
-//       <li onClick={onListItemClick}>{props.todos[1]}</li>
-//       <li onClick={onListItemClick}>{props.todos[2]}</li>
-//     </ul>
-//   );
-// };
-//
-// const App = () => (
-//   <div>
-//     <h2>My To Do List </h2>
-//     <TodoList
-//       todos={[
-//         'Learn react',
-//         'Crush Recast.ly',
-//         'Maybe sleep',
-//       ]}
-//     />
-//   </div>
-// );
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleIncrease = this.handleIncrease.bind(this);
+    this.handleDecrease = this.handleDecrease.bind(this);
+    this.state = {
+      number: 0
+    };
+  }
+  handleIncrease() {
+    this.setState({
+      number: this.state.number + 1
+    });
+  }
+
+  handleDecrease() {
+    this.setState({
+      number: this.state.number - 1
+    });
+  }
+
+  // 0 에서 1추가할때 왜 안 되는 이유 찾기
+  render() {
+    return (
+      <div>
+        <h1>카운터</h1>
+
+        <div>값 : {this.state.number < 0 ? 0 : this.state.number}</div>
+        <button onClick={this.handleIncrease}>+</button>
+        <button onClick={this.handleDecrease}>-</button>
+      </div>
+    );
+  }
+}
+class TodoListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return <div>제 todoList 목록들은 {this.props.todos} 입니다.</div>;
+  }
+}
 
 class GroceryItem extends React.Component {
   constructor(props) {
@@ -58,15 +76,17 @@ class GroceryItem extends React.Component {
       color: this.state.hover ? "#ed1212" : "#000"
     };
     return (
-      <li
-        style={style}
-        onMouseEnter={this.toggleHover.bind(this)}
-        onMouseLeave={this.toggleHover.bind(this)}
-        onClick={this.onListItemClick.bind(this)}
-      >
-        {this.props.groceries}
-        {this.props.todos}
-      </li>
+      // 자신이 받아온 props 값은 this. 키워드를 통하여 조회 할 수 있습니다.
+      <div>
+        <li
+          style={style}
+          onMouseEnter={this.toggleHover.bind(this)}
+          onMouseLeave={this.toggleHover.bind(this)}
+          onClick={this.onListItemClick.bind(this)}
+        >
+          {this.props.groceries}
+        </li>
+      </div>
     );
   }
 }
@@ -76,8 +96,13 @@ const GroceryApp = props => (
     {props.groceries.map(grocery => (
       <GroceryItem key={grocery.toString()} groceries={grocery} />
     ))}
+  </ul>
+);
+
+const TodoApp = props => (
+  <ul>
     {props.todoList.map(todo => (
-      <GroceryItem key={todo.toString()} todos={todo} />
+      <TodoListItem key={todo.toString()} todos={todo} />
     ))}
   </ul>
 );
@@ -85,6 +110,13 @@ const GroceryApp = props => (
 const groceries = ["cucumber", "kale"];
 const lists = ["Learn react", "Crush Recast.ly", "Maybe sleep"];
 ReactDOM.render(
-  <GroceryApp groceries={groceries} todoList={lists} />,
+  <div>
+    <Counter />
+    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    <GroceryApp groceries={groceries} />
+    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    <TodoApp todoList={lists} />
+  </div>,
+
   document.getElementById("root")
 );
